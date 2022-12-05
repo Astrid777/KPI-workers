@@ -1,0 +1,46 @@
+﻿@model CustomIdentityApp.ViewModels.RegisterViewModel
+<h2>Регистрация нового пользователя</h2>
+
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" asp-controller="Account" asp-action="Register">
+            <div>
+                <label asp-for="Email"></label><br />
+                <input asp-for="Email" />
+                <span asp-validation-for="Email"></span>
+            </div>
+            <div>
+                <label asp-for="Name"></label><br />
+                <input asp-for="Name" />
+                <span asp-validation-for="Name"></span>
+            </div>
+            <div>
+                <label asp-for="DepartmentId" class="control-label"></label>
+                <p>
+                    <select asp-for="DepartmentId" asp-items="ViewBag.Departments" class="custom-control-inline"></select>
+                </p>
+                <span asp-validation-for="DepartmentId"></span>
+            </div>
+            <div>
+                <label asp-for="Position"></label><br />
+                <input asp-for="Position" />
+                <span asp-validation-for="Position"></span>
+            </div>
+            <div>
+                <label asp-for="Password"></label><br />
+                <input asp-for="Password" />
+                <span asp-validation-for="Password"></span>
+            </div>
+            <div>
+                <label asp-for="PasswordConfirm"></label><br />
+                <input asp-for="PasswordConfirm" />
+                <span asp-validation-for="PasswordConfirm"></span>
+            </div>
+            <div>
+                <br />
+                <br />
+                <input type="submit" value="Зарегистрироваться" />
+            </div>
+        </form>
+    </div>
+    </div>

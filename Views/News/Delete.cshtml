@@ -1,0 +1,34 @@
+﻿@model CustomIdentityApp.Models.News
+
+<h1>Удаление</h1>
+<h3>Вы действитиельно хотите удалить выбранную новость?</h3>
+<div>
+    <hr />
+    <dl class="row">
+
+        <dt class="col-sm-2">
+            Дата:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+        <dt class="col-sm-2">
+            Текст
+        </dt>
+        <dd class="col-sm-10">
+            @{
+                string text = Model.Text;
+
+                if (text.Length > 15)
+                    text = text.Substring(0, 15)+"...";
+            }
+            @text
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Улалить" class="btn btn-danger" /> |
+        <a asp-controller="Home" asp-action="Index">Назад к списку</a>
+    </form>
+</div>

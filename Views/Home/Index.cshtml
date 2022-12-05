@@ -1,0 +1,37 @@
+﻿@model IEnumerable<CustomIdentityApp.Models.News>
+
+<h1>Новости</h1>
+
+@if ((User.IsInRole("Модератор")) || (User.IsInRole("Администратор")))
+{
+    <p>
+        <a class="btn btn-sm btn-primary" asp-action="Create" asp-controller="News">Добавить</a>
+    </p>
+}
+
+@if (Model.Count() == 0)
+{
+    <p>Новостей пока нет, в ближайшее время руководитель их добавит</p>
+}
+
+@foreach (var item in Model)
+{
+    <p>
+        <textarea style="width: 500px; height: 100px; outline:none; resize: none; padding: 0px;" readonly asp-for="@item.Text"></textarea>
+    </p>
+    <p>
+    </p>
+
+    @if ((User.IsInRole("Модератор")) || (User.IsInRole("Администратор")))
+    {
+        <a asp-controller="News" asp-action="Edit" asp-route-id="@item.Id">Редактировать</a>
+        <a asp-controller="News" asp-action="Delete" asp-route-id="@item.Id">Удалить</a>
+    }
+    <p>
+        Отредактирована @item.Date @item.User.Email
+    </p>
+
+    <p></p>
+    <p></p>
+    <p></p>
+}

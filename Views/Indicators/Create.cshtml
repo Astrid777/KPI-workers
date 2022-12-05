@@ -1,0 +1,56 @@
+﻿@model CustomIdentityApp.Models.Indicator
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            @if (ViewBag.s != null)
+            {
+                Department dep = ViewBag.s;
+
+       
+                <div class="form-group">
+                    <h3>Отдел: @dep.Name</h3>
+                </div>
+
+                <h5>Показатель будет добавлен в указанный отдел</h5>
+                <p>
+                    <input class="form-control" asp-for="DepartmentId" readonly="readonly" value=@dep.Id hidden="hidden"/>
+                </p>
+            }
+            else
+            {
+                <h4>Выберите отдел</h4>
+                <div>
+                    <p>
+                        <select asp-for="DepartmentId" asp-items="ViewBag.Departments" class="custom-control-inline"></select>
+                    </p>
+                </div>
+            }
+
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Добавить" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Назад к списку показателей</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

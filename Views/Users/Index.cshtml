@@ -1,0 +1,63 @@
+﻿@model IEnumerable<CustomIdentityApp.ViewModels.UsersViewModel>
+@{
+    ViewBag.Title = "Список пользователей";
+}
+
+<a class="btn btn-sm alert-success" asp-action="Create">Добавить пользователя</a>
+<a class="btn btn-sm alert-danger" href="@Url.RouteUrl("Default", new { controller = "Users", action = "Export"})">Скачать оценки</a>
+
+
+<table class="table">
+    <tr>
+        <th>Email</th>
+        <th>ФИО</th>
+        <th>Отдел</th>
+        <th>Роль</th>
+        <th>Должность</th>
+        @if (User.IsInRole("Модератор"))
+        {
+            <th>Баллы</th>
+            <th>Ознакомлен</th>
+            <th></th>
+        }
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+    </tr>
+    @foreach (var user in Model)
+    {
+<tr>
+    <td>@user.Email</td>
+    <td>@user.Name</td>
+    <td>@user.Department</td>
+    <td>@user.Role</td>
+    <td>@user.Position</td>
+
+    @if (User.IsInRole("Модератор"))
+    {
+        <td>@user.SummPoints</td>
+        <td>@user.IsFamiliarized</td>
+        <td>
+            <a class="btn btn-sm btn-info" asp-controller="Ratings" asp-action="Index" asp-route-id="@user.Id">Оценить</a>
+        </td>
+    }
+    <td>
+        <a class="btn btn-sm btn-primary" asp-action="Edit" asp-route-id="@user.Id">Изменить</a>
+    </td>
+    <td>
+        <a class="btn btn-sm" asp-action="ChangePassword" asp-route-id="@user.Id">Сменить пароль</a>
+    </td>
+    <td>
+        <a class="btn btn-sm" asp-controller="Roles" asp-action="Edit" asp-route-id="@user.Id">Права доступа</a>
+    </td>
+    <td>
+        <form asp-action="Delete" asp-route-id="@user.Id" method="post">
+            <button type="submit" class="btn btn-sm btn-danger">
+                Удалить
+            </button>
+        </form> 
+    </td>
+</tr>
+    }
+</table>

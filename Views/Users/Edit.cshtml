@@ -1,0 +1,46 @@
+﻿@model CustomIdentityApp.ViewModels.EditUserViewModel
+@{
+    ViewBag.Title = "Редактирование пользователя";
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" asp-controller="Users">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <input type="hidden" asp-for="Id" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Email" class="control-label">Email</label>
+                <input type="text" asp-for="Email" class="form-control" />
+            </div>
+
+           
+            <div class="form-group">
+                <label asp-for="Name" class="control-label">ФИО</label>
+                <input type="text" asp-for="Name" class="form-control" />
+            </div>
+
+                @if (Model.Email != User.Identity.Name)
+                {
+                <div class="form-group">
+                    <label asp-for="Position" class="control-label">Должность</label>
+                    <input type="text" asp-for="Position" class="form-control" />
+                </div>
+                }
+            
+            @if (User.IsInRole("Администратор") && (Model.Email != User.Identity.Name))
+            {
+                <div class="form-group">
+                    Отдел
+                    <select asp-for="DepartmentId" asp-items="ViewBag.Departments" class="form-control"></select>
+                </div>
+            }
+
+            <div class="form-group">
+                <input type="submit" value="Сохранить" class="btn btn-outline-secondary" />
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,64 @@
+﻿@model List<CustomIdentityApp.ViewModels.RatingViewModel>
+
+<h2>Личный кабинет</h2>
+<p></p>
+<p></p>
+Пользователь: @User.Identity.Name<br />
+ФИО: @ViewBag.UserPersonalName<br />
+Отдел: @ViewBag.UserDepartment<br />
+Должность:@ViewBag.UserPosition<br />
+<br />
+<br />
+<a class="btn btn-sm btn-primary" asp-controller="Users" asp-action="Edit" asp-route-id="@ViewBag.UserId">Редактировать данные</a>
+<a class="btn btn-sm btn-primary" asp-controller="Users" asp-action="ChangePassword" asp-route-id="@ViewBag.UserId">Сменить пароль</a>
+<p></p>
+<p></p> 
+
+@if (User.IsInRole("Пользователь"))
+{
+    <h4>Ваши показатели</h4>
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <form method="post">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Показатель
+                    </th>
+                    <th>
+                        Значение
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.Count; i++)
+                {
+                    <tr>
+                        <td>
+                            <input asp-for="@Model[i].Id" class="form-control" hidden />
+                            <input asp-for="@Model[i].IndicatorName" class="form-control" readonly />
+                        </td>
+                        <td>
+                            <input asp-for="@Model[i].Value" class="form-control" readonly />
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+
+        @if (ViewBag.UserIsFamiliarized == false)
+        {
+            <input type="submit" value="Ознакомиться" class="btn btn-primary" />
+        }
+        else
+        {
+            <h3>Вы уже ознакомились с показателями</h3>
+            <h4>@ViewBag.FamiliarizationTime</h4>
+        }
+      
+    </form>
+}
+
+
